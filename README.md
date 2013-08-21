@@ -27,3 +27,6 @@ To destroy the machine completely (you'll still keep the Vagrantfile and any cha
 ##To do
 * Fix the output of the provisioning script (formatting, more information)
 * General improvments to the script
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/DinoPaskvan/tmwa-vagrant/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
