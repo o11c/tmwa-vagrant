@@ -54,13 +54,16 @@ else
   cd /home/vagrant/tmwAthena
   git clone --recursive git://github.com/themanaworld/tmwa.git &> /dev/null || echo "[Error] Cloning tmwa failed."
   cd tmwa
-  git submodule update --init &> /dev/null || echo "[Error] Updating submodules for tmwa failed."
   echo "Building tmwa (please be patient, this can take some time)..."
   ./configure &> /dev/null || echo "[Error] Configure failed for tmwa."
   make &> /dev/null || echo "[Error] Building tmwa failed."
   sudo make install &> /dev/null || echo "[Error] Make install for tmwa failed."
   git config --global url.git@github.com:.pushInsteadOf git://github.com
 fi
+(
+  cd /home/vagrant/tmwAthena/tmwa/deps/attoconf
+  sudo ./setup.py install
+)
 if [ -d "/home/vagrant/tmwAthena/tmwa-server-data" ]; then
   echo "Checking for updates for the themanaworld/tmwa-server-data clone..."
   cd /home/vagrant/tmwAthena/tmwa-server-data
@@ -68,10 +71,10 @@ if [ -d "/home/vagrant/tmwAthena/tmwa-server-data" ]; then
   git checkout master &> /dev/null || echo "[Error] Failed to switch branches."
   TMWASD_UPDT=$(git pull)
   if [ "$TMWASD_UPDT" == "Already up-to-date." ]; then
-    echo "themanaworld/tmwa-server-data clone is already up to date."     
+    echo "themanaworld/tmwa-server-data clone is already up to date."
   else
-    echo "themanaworld/tmwa-server-data clone updated."     
-  fi 
+    echo "themanaworld/tmwa-server-data clone updated."
+  fi
 else
   echo "Cloning themanaworld/tmwa-server-data..."
   cd /home/vagrant/tmwAthena
@@ -99,7 +102,7 @@ fi
 # Run the tmwa server
 cd /home/vagrant/tmwAthena/tmwa-server-data/
 echo "Starting the server..."
-./char-server& ./login-server& ./map-server& 
+./char-server& ./login-server& ./map-server&
 sleep 15
 
 # Check for admin account and create it if it doesn't exist
